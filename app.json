@@ -1,0 +1,317 @@
+[
+    {
+        "name": "app.jsx", 
+        "parent": "phase1", 
+        "root": "/Users/Felix/Documents/hec/src/js/phase1/review_app/", 
+        "nodemodules": [
+            "react"
+        ], 
+        "links": [
+            4
+        ], 
+        "type": "other", 
+        "requires": [
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/ReviewApp.react.jsx"
+        ], 
+        "id": 0
+    }, 
+    {
+        "name": "ProductActions.js", 
+        "parent": "review_app", 
+        "root": "/Users/Felix/Documents/hec/src/js/phase1/review_app/actions/", 
+        "nodemodules": [], 
+        "links": [
+            11, 
+            10
+        ], 
+        "requiredby": [
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/Product.react.jsx", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/ProductsContainer.react.jsx", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/ReviewApp.react.jsx", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/ReviewBox.react.jsx", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/ReviewForm.react.jsx", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/ReviewFormTab.react.jsx", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/SideBar.react.jsx", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/StarsRating.react.jsx", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/stores/ReviewBoxStore.js"
+        ], 
+        "type": "action", 
+        "requires": [
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/dispatcher/AppDispatcher.js", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/constants/ProductConstants.js"
+        ], 
+        "id": 1
+    }, 
+    {
+        "name": "Product.react.jsx", 
+        "parent": "review_app", 
+        "root": "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/", 
+        "nodemodules": [
+            "react"
+        ], 
+        "links": [
+            1, 
+            3, 
+            12
+        ], 
+        "requiredby": [
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/ProductsContainer.react.jsx"
+        ], 
+        "type": "component", 
+        "requires": [
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/actions/ProductActions.js", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/ProductsContainer.react.jsx", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/stores/ProductStore.js"
+        ], 
+        "id": 2
+    }, 
+    {
+        "name": "ProductsContainer.react.jsx", 
+        "parent": "review_app", 
+        "root": "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/", 
+        "nodemodules": [
+            "react"
+        ], 
+        "links": [
+            2, 
+            12, 
+            1, 
+            5
+        ], 
+        "requiredby": [
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/Product.react.jsx", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/ReviewApp.react.jsx"
+        ], 
+        "type": "component", 
+        "requires": [
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/Product.react.jsx", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/stores/ProductStore.js", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/actions/ProductActions.js", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/ReviewBox.react.jsx"
+        ], 
+        "id": 3
+    }, 
+    {
+        "name": "ReviewApp.react.jsx", 
+        "parent": "review_app", 
+        "root": "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/", 
+        "nodemodules": [
+            "react"
+        ], 
+        "links": [
+            12, 
+            13, 
+            1, 
+            8, 
+            5, 
+            3
+        ], 
+        "requiredby": [
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/app.jsx"
+        ], 
+        "type": "component", 
+        "requires": [
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/stores/ProductStore.js", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/stores/ReviewBoxStore.js", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/actions/ProductActions.js", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/SideBar.react.jsx", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/ReviewBox.react.jsx", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/ProductsContainer.react.jsx"
+        ], 
+        "id": 4
+    }, 
+    {
+        "name": "ReviewBox.react.jsx", 
+        "parent": "review_app", 
+        "root": "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/", 
+        "nodemodules": [
+            "react"
+        ], 
+        "links": [
+            6, 
+            13, 
+            1
+        ], 
+        "requiredby": [
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/ProductsContainer.react.jsx", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/ReviewApp.react.jsx"
+        ], 
+        "type": "component", 
+        "requires": [
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/ReviewForm.react.jsx", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/stores/ReviewBoxStore.js", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/actions/ProductActions.js"
+        ], 
+        "id": 5
+    }, 
+    {
+        "name": "ReviewForm.react.jsx", 
+        "parent": "review_app", 
+        "root": "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/", 
+        "nodemodules": [
+            "react"
+        ], 
+        "links": [
+            7, 
+            1, 
+            13, 
+            9
+        ], 
+        "requiredby": [
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/ReviewBox.react.jsx"
+        ], 
+        "type": "component", 
+        "requires": [
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/ReviewFormTab.react.jsx", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/actions/ProductActions.js", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/stores/ReviewBoxStore.js", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/StarsRating.react.jsx"
+        ], 
+        "id": 6
+    }, 
+    {
+        "name": "ReviewFormTab.react.jsx", 
+        "parent": "review_app", 
+        "root": "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/", 
+        "nodemodules": [], 
+        "links": [
+            1
+        ], 
+        "requiredby": [
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/ReviewForm.react.jsx"
+        ], 
+        "type": "component", 
+        "requires": [
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/actions/ProductActions.js"
+        ], 
+        "id": 7
+    }, 
+    {
+        "name": "SideBar.react.jsx", 
+        "parent": "review_app", 
+        "root": "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/", 
+        "nodemodules": [
+            "react"
+        ], 
+        "links": [
+            12, 
+            1
+        ], 
+        "requiredby": [
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/ReviewApp.react.jsx"
+        ], 
+        "type": "component", 
+        "requires": [
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/stores/ProductStore.js", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/actions/ProductActions.js"
+        ], 
+        "id": 8
+    }, 
+    {
+        "name": "StarsRating.react.jsx", 
+        "parent": "review_app", 
+        "root": "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/", 
+        "nodemodules": [
+            "react"
+        ], 
+        "links": [
+            1
+        ], 
+        "requiredby": [
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/ReviewForm.react.jsx"
+        ], 
+        "type": "component", 
+        "requires": [
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/actions/ProductActions.js"
+        ], 
+        "id": 9
+    }, 
+    {
+        "name": "ProductConstants.js", 
+        "parent": "review_app", 
+        "root": "/Users/Felix/Documents/hec/src/js/phase1/review_app/constants/", 
+        "nodemodules": [
+            "keymirror"
+        ], 
+        "links": [], 
+        "requiredby": [
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/actions/ProductActions.js", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/stores/ProductStore.js", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/stores/ReviewBoxStore.js"
+        ], 
+        "type": "constant", 
+        "requires": [], 
+        "id": 10
+    }, 
+    {
+        "name": "AppDispatcher.js", 
+        "parent": "review_app", 
+        "root": "/Users/Felix/Documents/hec/src/js/phase1/review_app/dispatcher/", 
+        "nodemodules": [
+            "flux"
+        ], 
+        "links": [], 
+        "requiredby": [
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/actions/ProductActions.js", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/stores/ProductStore.js", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/stores/ReviewBoxStore.js"
+        ], 
+        "type": "other", 
+        "requires": [], 
+        "id": 11
+    }, 
+    {
+        "name": "ProductStore.js", 
+        "parent": "review_app", 
+        "root": "/Users/Felix/Documents/hec/src/js/phase1/review_app/stores/", 
+        "nodemodules": [
+            "events", 
+            "lodash"
+        ], 
+        "links": [
+            11, 
+            10, 
+            13
+        ], 
+        "requiredby": [
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/Product.react.jsx", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/ProductsContainer.react.jsx", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/ReviewApp.react.jsx", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/SideBar.react.jsx"
+        ], 
+        "type": "store", 
+        "requires": [
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/dispatcher/AppDispatcher.js", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/constants/ProductConstants.js", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/stores/ReviewBoxStore.js"
+        ], 
+        "id": 12
+    }, 
+    {
+        "name": "ReviewBoxStore.js", 
+        "parent": "review_app", 
+        "root": "/Users/Felix/Documents/hec/src/js/phase1/review_app/stores/", 
+        "nodemodules": [
+            "events", 
+            "lodash"
+        ], 
+        "links": [
+            11, 
+            1, 
+            10
+        ], 
+        "requiredby": [
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/ReviewApp.react.jsx", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/ReviewBox.react.jsx", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/components/ReviewForm.react.jsx", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/stores/ProductStore.js"
+        ], 
+        "type": "store", 
+        "requires": [
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/dispatcher/AppDispatcher.js", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/actions/ProductActions.js", 
+            "/Users/Felix/Documents/hec/src/js/phase1/review_app/constants/ProductConstants.js"
+        ], 
+        "id": 13
+    }
+]
