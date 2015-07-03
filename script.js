@@ -36,8 +36,8 @@ for(var i=0, l=data.length; i<l; i++){
 }
 
 
-var width = 1200,
-    height = 900;
+var width = 1600,
+    height = 1600;
 
 var color = d3.scale.category20();
 
