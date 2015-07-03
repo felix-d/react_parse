@@ -2,9 +2,18 @@
   stroke: #fff;
   stroke-width: 1.5px;
 }
+body {
+    background-color: #2F2F2F;
+}
+html {
+    fill: #FFF;
+    font-size: 18px;
+font-weight: lighter;
+}
 
 .link {
-  stroke: #000;
+  stroke: #FFF;
   stroke-opacity: .6;
 }
+
 
