@@ -1,0 +1,22 @@
+{
+  "name": "react_parse",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bundle.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/felix-d/react_parse.git"
+  },
+  "author": "Felix Descoteaux <flx.descoteaux@gmail.com> (http://httplambda.com/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/felix-d/react_parse/issues"
+  },
+  "homepage": "https://github.com/felix-d/react_parse",
+  "dependencies": {
+    "randomcolor": "^0.3.0"
+  }
+}
