@@ -38,32 +38,63 @@ class ProjectParser(object):
         self._walk_project()
         self._add_requiredby()
         self._required_files_path_to_nodes()
+        self._process_flux()
 
     def _required_files_path_to_nodes(self):
         for node in self.project.nodes:
-            node.required_files = self._names_to_nodes(node.required_files)
+            node.required_files = self._files_paths_to_nodes(node.required_files)
+            print(node)
 
     def _add_requiredby(self):
         for node in self.project.nodes:
-            if node.name in self.track_requiredby:
-                requiredby_names = self.track_requiredby[node.name]
-                node.required_by = self._names_to_nodes(requiredby_names)
+            if node.file_path in self.track_requiredby:
+                requiredby_names = self.track_requiredby[node.file_path]
+                node.required_by = self._files_paths_to_nodes(requiredby_names)
 
-    def _names_to_nodes(self, names):
+    def _files_paths_to_nodes(self, files_paths):
         nodes = []
-        for name in names:
+        for file_path in files_paths:
             for node in self.project.nodes:
-                if name == node.name:
+                if file_path == node.file_path:
                     nodes.append(node)
         return nodes
                     
         
-    def _get_file_type(self, name):
+    def _get_file_type(self, file_path):
         for k in self.regexes:
-            if self.regexes[k].match(name):
+            if self.regexes[k].match(file_path):
                 return k
         return OTHER
-        
+
+    def _process_flux(self):
+        for n in self.project.nodes:
+            
+            if n.node_type == COMPONENT:
+                # we add stores to listened stores
+                for ls in n.listened_stores_detail:
+                    for m in self.project.nodes:
+                        if ls.store ==  m.file_name_no_ext:
+                            if m not in n.listened_stores:
+                                Listened_stores.append(m)
+                # we add actions nodes to actions
+                for a in n.actions_detail:
+                    for m in self.project.nodes:
+                        if a.action_type == m.file_name_no_ext:
+                            if m not in n.actions:
+                                n.actions.append(m)
+                            
+            elif n.node_type == ACTION:
+                # we add linked stores to actions and vice versa
+                for ad in n.actions_dispatches_detail:
+                    for m in self.project.nodes:
+                        if m.node_type == STORE:
+                            for ac in m.actions_calls_detail:
+                                if ac.constant == ad.constant and ac.constants == ad.constants:
+                                    if n not in n.linked_stores:
+                                        n.linked_stores.append(m)
+                                    if m not in m.action_nodes_listened:
+                                        m.action_nodes_listened.append(n)
+            
     def _walk_project(self):
         """Walks through the project and creates the nodes.
         """
