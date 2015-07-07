@@ -43,7 +43,6 @@ class ProjectParser(object):
     def _required_files_path_to_nodes(self):
         for node in self.project.nodes:
             node.required_files = self._files_paths_to_nodes(node.required_files)
-            print(node)
 
     def _add_requiredby(self):
         for node in self.project.nodes:
