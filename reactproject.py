@@ -12,8 +12,9 @@ ListenedStore = namedtuple('ListenedStore', ('store'))
 class Project(object):
     """A React project
 
-    Attributes:
+    Attrs:
         nodes (List[Node])
+
     """
 
     def __init__(self, root):
@@ -32,6 +33,20 @@ class Node(object):
         dir_path (str): The full path of the file directory
         parent_dir (str): The grand parent directory
         project (Project): The project
+    
+    Attrs:
+        file_name (str)
+        file_name_no_ext (str)
+        dir_path (str)
+        file_path (str)
+        parent_dir (str)
+        project (Project)
+        required_nodes (list)
+        required_by (list)
+        node_modules (list)
+        node_type (str)
+        file_content (str)
+        uniqid (int)
 
     """
     uniqid_counter = 0
@@ -52,6 +67,7 @@ class Node(object):
         Node.uniqid_counter += 1
 
     def get_data(self):
+        """Returns a dict with the node data"""
         return dict(
             file_name=self.file_name,
             dir_path=self.dir_path,
@@ -68,38 +84,65 @@ class Node(object):
         
 
 class ComponentNode(Node):
+    """A Component node
+    
+    Attrs:
+        node_type (str): The node type
+        actions_parsed_info (list[Action]): A list of tuples containing parsed info about called actions
+        stores_parsed_info (list[ListenedStore]): A list of tuples containing parsed info about listened stores
+        actions (list[ActionsNode]): A list of actions nodes called by the component
+        stores (list[StoreNode]): A list of store nodes to which the component listens to
+
+    """
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.node_type = COMPONENT
-        self.actions_detail = []
+
+        self.actions_parsed_info = []
+        self.stores_parsed_info = []
+
         self.actions = []
-        self.listened_stores_detail = []
-        self.listened_stores = []
+        self.stores = []
 
     def get_data(self):
+        """Add additional data to the node data and returns it"""
         data = super().get_data()
         data['actions'] = self.actions
-        data['listened_stores'] = self.listened_stores
+        data['stores'] = self.stores
         return data
 
 
 class ActionsNode(Node):
+    """A actions node
+    
+    Attrs:
+        node_type (str): The node type
+        actions_dispatches_parsed_info (list[Action]): A list of tuples containing parsed info about called actions
+        actions_dispatches (list[ListenedStore]): A list of tuples containing parsed info about listened stores
+        stores (list[StoreNode]): A list of store nodes to which the component listens to
+
+    """
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.node_type = ACTION
-        self.actions_dispatches_detail = []
-        self.actions_dispatches = []
-        self.linked_stores = []
+        self.actions_dispatches_parsed_info = []
+        self.stores = []
 
     def get_data(self):
+        """Add additional data to the node data and returns it"""
         data = super().get_data()
-        data['actions_dispatches'] = self.actions_dispatches
         return data
     
 
 class ConstantsNode(Node):
+    """A constant node
+    
+    Attrs:
+        node_type (str): The node type
+
+    """
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -107,20 +150,35 @@ class ConstantsNode(Node):
 
 
 class StoreNode(Node):
+    """A constant node
+    
+    Attrs:
+        node_type (str): The node type
+        actions_calls_parsed_info (list[ActionCall])
+        actions (list[ActionsNode])
+
+    """
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.actions_calls = []
-        self.action_nodes_listened = []
         self.node_type = STORE
 
+        self.actions_calls_parsed_info = []
+        self.actions = []
+
     def get_data(self):
+        """Add additional data to the node data and returns it"""
         data = super().get_data()
-        data['actions_calls'] = self.actions_calls
         return data
 
 
 class OtherNode(Node):
+    """Other nodes
+    
+    Attrs:
+        node_type (str): The node type
+
+    """
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

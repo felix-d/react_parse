@@ -5,7 +5,7 @@ class NodeParser(object):
     """A NodeParser parses a file for relevant information
 
     Args:
-        node (Node): A node 
+        project_parser (ProjectParser)
 
     """
 
@@ -29,22 +29,22 @@ class NodeParser(object):
             self._specific_parse()
 
             self.node.node_modules = re.findall(self.req_nodemodules, self.node.file_content)
-            self.node.required_files = re.findall(self.require_re, self.node.file_content)
+            self.node.required_nodes = re.findall(self.require_re, self.node.file_content)
 
-            for i, m in enumerate(self.node.required_files):
+            for i, m in enumerate(self.node.required_nodes):
 
                 # if there is no file extension, add .js
                 if not re.match(r'.*\.[a-zA-Z]{1,5}$', m):
                     m = m + ".js"
 
                 # cause we're adding the full path, not the relative path
-                self.node.required_files[i] = os.path.abspath(m)
+                self.node.required_nodes[i] = os.path.abspath(m)
 
                 # we add it to the requiredby dict
-                if not self.node.required_files[i] in self.project_parser.track_requiredby:
-                    self.project_parser.track_requiredby[self.node.required_files[i]] = [self.node.file_path]
+                if not self.node.required_nodes[i] in self.project_parser.track_requiredby:
+                    self.project_parser.track_requiredby[self.node.required_nodes[i]] = [self.node.file_path]
                 else:
-                    self.project_parser.track_requiredby[self.node.required_files[i]].append(self.node.file_path)
+                    self.project_parser.track_requiredby[self.node.required_nodes[i]].append(self.node.file_path)
 
     def _specific_parse(self):
         pass
@@ -59,8 +59,8 @@ class ComponentNodeParser(NodeParser):
     def _specific_parse(self):
         actions = re.findall(self.actions_calls_re, self.node.file_content)
         stores = re.findall(self.listening_to_re, self.node.file_content)
-        self.listened_stores_detail = [ListenedStore(a) for a in stores] 
-        self.node.actions_detail = [Action(a[0], a[1], a[2]) for a in actions]
+        self.stores_parsed_info = [ListenedStore(a) for a in stores] 
+        self.node.actions_parsed_info = [Action(a[0], a[1], a[2]) for a in actions]
         
 
 class ActionsNodeParser(NodeParser):
@@ -68,7 +68,7 @@ class ActionsNodeParser(NodeParser):
 
     def _specific_parse(self):
         actions_dispatches = re.findall(self.actions_dispatch_re, self.node.file_content)
-        self.node.actions_dispatches_detail = [ActionDispatch(a[0], a[1], a[2]) for a in actions_dispatches]
+        self.node.actions_dispatches_parsed_info = [ActionDispatch(a[0], a[1], a[2]) for a in actions_dispatches]
 
 
 class StoreNodeParser(NodeParser):
@@ -76,7 +76,7 @@ class StoreNodeParser(NodeParser):
 
     def _specific_parse(self):
         actions_calls = re.findall(self.actions_calls_re, self.node.file_content)
-        self.node.actions_calls_detail = [ActionCall(a[0], a[1]) for a in actions_calls]
+        self.node.actions_calls_parsed_info = [ActionCall(a[0], a[1]) for a in actions_calls]
 
 
 class ConstantsNodeParser(NodeParser):

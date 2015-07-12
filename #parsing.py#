@@ -71,13 +71,13 @@ class ProjectParser(object):
             
             if n.node_type == COMPONENT:
                 # we add stores to listened stores
-                for ls in n.stores_parsing_info:
+                for ls in n.stores_parsed_info:
                     for m in self.project.nodes:
                         if ls.store ==  m.file_name_no_ext:
                             if m not in n.stores:
                                 stores.append(m)
                 # we add actions nodes to actions
-                for a in n.actions_parsing_info:
+                for a in n.actions_parsed_info:
                     for m in self.project.nodes:
                         if a.action_type == m.file_name_no_ext:
                             if m not in n.actions:
@@ -85,15 +85,15 @@ class ProjectParser(object):
                             
             elif n.node_type == ACTION:
                 # we add linked stores to actions and vice versa
-                for ad in n.actions_dispatches_detail:
+                for ad in n.actions_dispatches_parsed_info:
                     for m in self.project.nodes:
                         if m.node_type == STORE:
-                            for ac in m.actions_calls_detail:
+                            for ac in m.actions_calls_parsed_info:
                                 if ac.constant == ad.constant and ac.constants == ad.constants:
-                                    if n not in n.linked_stores:
-                                        n.linked_stores.append(m)
-                                    if m not in m.action_nodes_listened:
-                                        m.action_nodes_listened.append(n)
+                                    if n not in n.stores:
+                                        n.stores.append(m)
+                                    if m not in m.actions:
+                                        m.actions.append(n)
             
     def _walk_project(self):
         """Walks through the project and creates the nodes.
