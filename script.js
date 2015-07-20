@@ -10,8 +10,8 @@ function dblclick(d) {
 }
 
 
-var width = 960,
-    height = 500,
+var width = 1200,
+    height = 900,
     linkedByIndex = {},
     colors = randomcolor({
       count: 3,
