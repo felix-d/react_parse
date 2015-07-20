@@ -22,7 +22,7 @@ def main():
 
     # we write the results
     with open('app.json', 'w') as json_file:
-        json_file.write(json.dumps(project.get_data(), indent=4))
+        json_file.write(project_parser.get_json())
     
     
 if __name__ == "__main__":

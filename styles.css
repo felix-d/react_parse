@@ -1,19 +1,20 @@
-.node {
-  stroke: #fff;
+.link {
+  stroke: #888;
   stroke-width: 1.5px;
 }
+
+.circle {
+  cursor: move;
+  stroke: #222;
+  stroke-width: 1.5px;
+}
+
+text {
+    fill: #111;
+    font: 12px sans-serif;
+    cursor: move;
+}
+
 body {
-    background-color: #2F2F2F;
+    background: #EEE;
 }
-html {
-    fill: #FFF;
-    font-size: 18px;
-font-weight: lighter;
-}
-
-.link {
-  stroke: #FFF;
-  stroke-opacity: .6;
-}
-
-

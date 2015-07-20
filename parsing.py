@@ -1,4 +1,4 @@
-import re, os
+import re, os, json, math
 from constants import OTHER, COMPONENT, ACTION, STORE, CONSTANT
 from reactproject import Project, Node, ComponentNode, ConstantsNode, ActionsNode, StoreNode
 from nodeparsers import ComponentNodeParser, ActionsNodeParser, StoreNodeParser, ConstantsNodeParser, OtherNodeParser
@@ -70,13 +70,17 @@ class ProjectParser(object):
             
             if n.node_type == COMPONENT:
                 # we add stores to listened stores
-                for ls in n.stores_parsing_info:
+                for ls in n.stores_parsed_info:
                     for m in self.project.nodes:
                         if ls.store ==  m.file_name_no_ext:
                             if m not in n.stores:
-                                stores.append(m)
+                                n.stores.append(m)
+
+                            if n not in m.components:
+                                m.components.append(n)
+
                 # we add actions nodes to actions
-                for a in n.actions_parsing_info:
+                for a in n.actions_parsed_info:
                     for m in self.project.nodes:
                         if a.action_type == m.file_name_no_ext:
                             if m not in n.actions:
@@ -84,15 +88,15 @@ class ProjectParser(object):
                             
             elif n.node_type == ACTION:
                 # we add linked stores to actions and vice versa
-                for ad in n.actions_dispatches_detail:
+                for ad in n.actions_dispatches_parsed_info:
                     for m in self.project.nodes:
                         if m.node_type == STORE:
-                            for ac in m.actions_calls_detail:
+                            for ac in m.actions_calls_parsed_info:
                                 if ac.constant == ad.constant and ac.constants == ad.constants:
-                                    if n not in n.linked_stores:
-                                        n.linked_stores.append(m)
-                                    if m not in m.action_nodes_listened:
-                                        m.action_nodes_listened.append(n)
+                                    if n not in n.stores:
+                                        n.stores.append(m)
+                                    if m not in m.actions:
+                                        m.actions.append(n)
             
     def _walk_project(self):
         """Walks through the project and creates the nodes.
@@ -138,3 +142,66 @@ class ProjectParser(object):
 
                         node_parser.parse(node)
                         self.project.nodes.append(node)
+
+
+    def get_json(self):
+        res = dict(nodes=[], links=[])
+        for n in self.project.nodes:
+            if n.node_type not in [COMPONENT, STORE, ACTION]:
+                continue
+            node_info = dict()
+            node_info['id'] = n.uniqid
+            node_info['name'] = n.file_name
+            node_info['size'] = math.log(len(n.required_by) + 1)
+
+            if n.node_type == COMPONENT:
+                node_info['type'] = COMPONENT
+                for a in n.actions:
+                    link = dict(source=n.uniqid, target=a.uniqid)
+                    if link not in res['links']:
+                        res['links'].append(link)
+
+            elif n.node_type == STORE:
+                node_info['type'] = STORE
+                for c in n.components:
+                    link = dict(source=n.uniqid, target=c.uniqid)
+                    if link not in res['links']:
+                        res['links'].append(link)
+
+            elif n.node_type == ACTION:
+                node_info['type'] = ACTION
+                for s in n.stores:
+                    link = dict(source=n.uniqid, target=s.uniqid)
+                    if link not in res['links']:
+                        res['links'].append(link)
+
+            res['nodes'].append(node_info)
+
+        # We set the target and source depending on index values
+        for n in res['links']:
+            for i, m in enumerate(res['nodes']):
+                if n['source'] == m['id']:
+                    n['source'] = i
+                elif n['target'] == m['id']:
+                    n['target'] = i
+
+        # we change the size to be between 5 and 15
+        min_s = max_s = None
+        
+        for n in res['nodes']:
+            if min_s is None or max_s is None:
+                min_s = max_s = n['size']
+            elif n['size'] < min_s:
+                min_s = n['size']
+            elif n['size'] > max_s:
+                max_s = n['size']
+
+        old_range = max_s - min_s
+        new_min = 8
+        new_max = 20
+        new_range = new_max - new_min
+        
+        for n in res['nodes']:
+            n['size'] = (((n['size'] - min_s) * new_range) / old_range) + new_min
+
+        return json.dumps(res, indent=4)

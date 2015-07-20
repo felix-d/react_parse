@@ -52,19 +52,35 @@ class NodeParser(object):
 
 
 class ComponentNodeParser(NodeParser):
+    """A Component Node Parser
+
+    Attrs:
+        actions_calls_re (regex): A regex to parse action calls
+        listening_to_re (regex): A regex to parse stores listened to
+
+    """
 
     actions_calls_re = re.compile(r'(?P<actions>[^\s]*actions?)\.(?P<call>[^\s()]*)\((?P<args>[^\s]*)\)', re.I)
-    listening_to_re = re.compile(r'(?P<store>\w+stores?)\.mixin', re.I)
+    # depends if flux or mcfly
+    listening_to_re = re.compile(r'(?P<store>\w+stores?)\.(?:mixin|addChangeListener)', re.I)
 
     def _specific_parse(self):
         actions = re.findall(self.actions_calls_re, self.node.file_content)
         stores = re.findall(self.listening_to_re, self.node.file_content)
-        self.stores_parsed_info = [ListenedStore(a) for a in stores] 
+        print(stores)
+        self.node.stores_parsed_info = [ListenedStore(a) for a in stores] 
         self.node.actions_parsed_info = [Action(a[0], a[1], a[2]) for a in actions]
         
 
 class ActionsNodeParser(NodeParser):
-    actions_dispatch_re = re.compile(r'(?P<action>\w+)(: *function\(\w*\)|\(\w*\))(?:.*?)actiontype:(?:\s*?)(?P<constants>\w+)(\.actiontypes)?\.(?P<constant>\w+)', re.I | re.S)
+    """A Actions Node Parser
+
+    Attrs:
+        actions_dispatch_re (regex): A regex to parse action dispatches
+
+    """
+    # depends if flux or mcfly
+    actions_dispatch_re = re.compile(r'(?P<action>\w+)(?:: *function\(\w*\)|\(\w*\))(?:.*?)actiontype:(?:\s*?)(?P<constants>\w+)(?:\.actiontypes)?\.(?P<constant>\w+)', re.I | re.S)
 
     def _specific_parse(self):
         actions_dispatches = re.findall(self.actions_dispatch_re, self.node.file_content)
@@ -72,6 +88,12 @@ class ActionsNodeParser(NodeParser):
 
 
 class StoreNodeParser(NodeParser):
+    """A Store Node Parser
+
+    Attrs:
+        actions_calls_re (regex): A regex to parse action called
+
+    """
     actions_calls_re = re.compile(r'case (?P<constants>\w+constants?)(?:\.\w+)?\.(?P<constant>\w+):', re.I)
 
     def _specific_parse(self):

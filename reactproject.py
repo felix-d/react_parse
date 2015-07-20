@@ -21,9 +21,6 @@ class Project(object):
         self.nodes = []
         self.root = root
 
-    def get_data(self):
-        return "data"
-
 
 class Node(object):
     """A node is a file
@@ -49,7 +46,7 @@ class Node(object):
         uniqid (int)
 
     """
-    uniqid_counter = 0
+    uniqid_counter = -1
 
     def __init__(self, file_name, dir_path, parent_dir, project):
         self.file_name = file_name
@@ -165,6 +162,7 @@ class StoreNode(Node):
 
         self.actions_calls_parsed_info = []
         self.actions = []
+        self.components = []
 
     def get_data(self):
         """Add additional data to the node data and returns it"""
